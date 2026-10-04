@@ -1,10 +1,10 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      "Protocol-Emulator"
-  author:       ""      "deetya326, rachana-hegde-1"
-  discord:      ""     "https://discordapp.com/users/845950602508369940" # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      "A tiny programmable processor for cycle-accurate communication protocol emulation." # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
+  title:           "Protocol-Emulator"
+  author:          "deetya326, rachana-hegde-1"
+  discord:         "https://discordapp.com/users/845950602508369940" # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  description:     "A tiny programmable processor for cycle-accurate communication protocol emulation." # One line description of what your project does
+  language:         "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
