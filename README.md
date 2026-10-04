@@ -1,42 +1,146 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project Template
 
-- [Read the documentation for project](docs/info.md)
+# Protocol Emulator ASIC
 
-## What is Tiny Tapeout?
+A tiny programmable processor designed for cycle-accurate communication protocol emulation.
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+## Jane Street ASIC Competition
 
-To learn more and get started, visit https://tinytapeout.com.
+This project is being developed for the **Jane Street Protocol Emulator ASIC Competition**.
 
-## Set up your Verilog project
+The goal is to design a small, reprogrammable processor whose instruction set is optimized for pin-level I/O and cycle-exact timing, allowing communication protocols to be implemented in firmware.
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+### Competition Deadline
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
+**January 18, 2027**
 
-## Enable GitHub actions to build the results page
+### Competition Link
 
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
+[Jane Street Protocol Emulator ASIC Competition](https://blog.janestreet.com/protocol-emulator-asic-competition/)
 
-## Resources
+## Team
 
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
+| Member | Role |
+|---|---|
+| Deetya | Lead — Architecture, RTL, Physical Design |
+| Rachana | Verification, Firmware, Tooling |
 
-## What next?
+## Target Protocols
 
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+### Required
+
+- UART
+- SPI
+- I2C
+
+### Stretch Goals
+
+- JTAG
+- SWD
+- CAN
+- Low-speed USB
+- 10 Mbit Ethernet
+
+## Repository Structure
+
+```text
+protocol-emulator/
+├── asm/          Assembler and ISA tooling
+├── fw/           Protocol firmware
+├── model/        Software ISA reference model
+│
+├── src/          Hardware RTL
+├── test/         Testbenches and verification
+├── docs/         Project documentation and ISA specification
+│
+├── info.yaml     Tiny Tapeout project configuration
+├── README.md     Project documentation
+└── LICENSE       Project license
+```
+
+## Project Status
+
+### Architecture
+
+- [ ] ISA specification
+- [ ] ISA review
+- [ ] ISA frozen
+
+### Tooling
+
+- [ ] Python assembler
+- [ ] Reference ISA simulator
+- [ ] Program loader
+
+### RTL
+
+- [ ] CPU core
+- [ ] GPIO / pin-control unit
+- [ ] Cycle counter
+- [ ] Memory interface
+- [ ] Protocol I/O support
+
+### Verification
+
+- [ ] Instruction-level tests
+- [ ] Randomized testing
+- [ ] Protocol checkers
+- [ ] SystemVerilog assertions
+- [ ] Formal verification
+- [ ] Functional coverage
+- [ ] Full regression
+
+### Firmware
+
+- [ ] UART
+- [ ] SPI
+- [ ] I2C
+
+### ASIC Flow
+
+- [ ] Synthesis
+- [ ] Area analysis
+- [ ] Place and route
+- [ ] Timing analysis
+- [ ] DRC
+- [ ] LVS
+- [ ] Final GDS
+
+### Submission
+
+- [ ] Documentation
+- [ ] Final regression
+- [ ] Submission package
+- [ ] Target submission — January 16, 2027
+- [ ] Competition deadline — January 18, 2027
+
+## ISA Documentation
+
+The ISA specification is maintained in [`docs/isa.md`](docs/isa.md).
+
+The specification covers:
+
+- Registers
+- Instructions
+- Pin I/O
+- Timing
+- Memory
+
+## Verification and Development
+
+The software tooling and verification infrastructure are developed alongside the hardware RTL.
+
+The reference ISA model is intended to provide a software-level reference for checking processor behavior, while the assembler converts firmware programs into the instruction representation consumed by the processor.
+
+Protocol firmware and verification environments will be developed for UART, SPI, and I2C.
+
+## Tiny Tapeout
+
+This project uses the Tiny Tapeout Verilog flow for the ASIC implementation.
+
+Project configuration is maintained in [`info.yaml`](info.yaml).
+
+## License
+
+See [`LICENSE`](LICENSE).
