@@ -9,11 +9,11 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+This project is a programmable protocol emulator implemented as a digital ASIC. The current version is based on the Tiny Tapeout example design and is being developed into a processor-controlled emulator for communication protocols such as UART, SPI, and I2C.
 
 ## How to test
 
-Explain how to use your project
+The design can be tested using the provided automated testbench and Tiny Tapeout's simulation and verification flow. The testbench applies input signals to the design and checks the resulting outputs.
 
 ## External hardware
 
