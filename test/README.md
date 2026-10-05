@@ -1,47 +1,50 @@
-# Sample testbench for a Tiny Tapeout project
+# Verification Testbench
 
-This is a sample testbench for a Tiny Tapeout project. It uses [cocotb](https://docs.cocotb.org/en/stable/) to drive the DUT and check the outputs.
-See below to get started or for more information, check the [website](https://tinytapeout.com/hdl/testing/).
 
-## Setting up
+This directory contains the Cocotb-based RTL verification infrastructure for
+the protocol emulator.
 
-1. Edit [Makefile](Makefile) and modify `PROJECT_SOURCES` to point to your Verilog files.
-2. Edit [tb.v](tb.v) and replace `tt_um_example` with your module name.
+## Current status
 
-## How to run
+The verification environment is currently based on the Tiny Tapeout testbench
+template and provides the initial simulation smoke-test harness.
 
-To run the RTL simulation:
+The current smoke test verifies that:
 
-```sh
-make -B
-```
+- the DUT compiles successfully with Icarus Verilog;
+- the Cocotb testbench starts correctly;
+- clock and reset can be driven;
+- the current template DUT produces the expected output.
 
-To run gatelevel simulation, first harden your project and copy `../runs/wokwi/results/final/verilog/gl/{your_module_name}.v` to `gate_level_netlist.v`.
+The current DUT is still the Tiny Tapeout template module `tt_um_example`.
+The testbench will be updated once the protocol-emulator CPU top-level
+interface is defined.
 
-Then run:
+## Running the RTL smoke test
 
-```sh
-make -B GATES=yes
-```
+Run `make -B` from this directory.
 
-If you wish to save the waveform in VCD format instead of FST format, edit tb.v to use `$dumpfile("tb.vcd");` and then run:
+A successful run should report `TESTS=1 PASS=1 FAIL=0`.
 
-```sh
-make -B FST=
-```
+The simulation generates the FST waveform `tb.fst`.
 
-This will generate `tb.vcd` instead of `tb.fst`.
+The waveform can be viewed with GTKWave using `gtkwave tb.fst tb.gtkw`
+or with Surfer using `surfer tb.fst`.
 
-## How to view the waveform file
+## Gate-level simulation
 
-Using GTKWave
+Gate-level simulation can be run after a hardened netlist is available
+using `make -B GATES=yes`.
 
-```sh
-gtkwave tb.fst tb.gtkw
-```
+The gate-level flow expects the generated netlist as `gate_level_netlist.v`.
 
-Using Surfer
+## Future verification work
 
-```sh
-surfer tb.fst
-```
+As the CPU RTL and ISA are developed, this testbench will be extended to cover:
+
+- reset and basic instruction execution;
+- pin I/O operations;
+- cycle-accurate timing;
+- UART, SPI and I2C protocol behavior;
+- firmware-driven protocol sequences;
+- regression tests for the reference model and assembler.
