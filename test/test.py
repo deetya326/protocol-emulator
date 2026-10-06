@@ -23,11 +23,12 @@ async def test_project(dut):
 
     dut.rst_n.value = 1
 
-    # Make sure UART is idle-high
+    # Check UART idle state
     await ReadOnly()
     assert dut.uo_out.value == 1
 
-    # Send byte 0xA5
+    # IMPORTANT: ReadOnly is finished here.
+    # Now we can change inputs.
     dut.ui_in.value = 0xA5
     dut.uio_in.value = 1
 
@@ -35,13 +36,13 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 1)
     await ReadOnly()
 
-    # UART start bit
+    # Start bit
     assert dut.uo_out.value == 0
 
-    # Release start signal
+    # Remove start signal
     dut.uio_in.value = 0
 
-    # UART data bits, LSB first
+    # Data bits, LSB first
     expected_bits = [1, 0, 1, 0, 0, 1, 0, 1]
 
     for expected in expected_bits:
