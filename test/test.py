@@ -3,13 +3,12 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles, ReadOnly
+from cocotb.triggers import ClockCycles, Timer
 
 
 @cocotb.test()
 async def test_project(dut):
 
-    # Start clock
     clock = Clock(dut.clk, 10, unit="us")
     cocotb.start_soon(clock.start())
 
@@ -20,26 +19,22 @@ async def test_project(dut):
     dut.rst_n.value = 0
 
     await ClockCycles(dut.clk, 10)
-
     dut.rst_n.value = 1
 
-    # Check UART idle state
-    await ReadOnly()
+    # Move to a new timestep before checking/setting signals
+    await Timer(1, unit="ns")
     assert dut.uo_out.value == 1
 
-    # IMPORTANT: ReadOnly is finished here.
-    # Now we can change inputs.
+    # Send 0xA5
     dut.ui_in.value = 0xA5
     dut.uio_in.value = 1
 
     # Start transmission
     await ClockCycles(dut.clk, 1)
-    await ReadOnly()
-
-    # Start bit
+    await Timer(1, unit="ns")
     assert dut.uo_out.value == 0
 
-    # Remove start signal
+    # Release start
     dut.uio_in.value = 0
 
     # Data bits, LSB first
@@ -47,10 +42,10 @@ async def test_project(dut):
 
     for expected in expected_bits:
         await ClockCycles(dut.clk, 1)
-        await ReadOnly()
+        await Timer(1, unit="ns")
         assert dut.uo_out.value == expected
 
     # Stop bit
     await ClockCycles(dut.clk, 1)
-    await ReadOnly()
+    await Timer(1, unit="ns")
     assert dut.uo_out.value == 1
